@@ -1,5 +1,7 @@
 package com.faz.news.data.database
 
-class TypeResponseConverter {
+import com.squareup.moshi.Moshi
+
+class TypeResponseConverter(moshi: Moshi) {
     // TODO
 }
