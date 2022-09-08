@@ -11,17 +11,12 @@ class GetNewsUseCase @Inject constructor(
     configuration: Configuration,
     private val newsRepository: NewsRepository
 ) : UseCase<GetNewsUseCase.Request, GetNewsUseCase.Response>(configuration) {
-    data class Request(
-        val page: Int
-//        , val onStart: () -> Unit,
-//        val onComplete: () -> Unit,
-//        val onError: (String?) -> Unit
-    ) : UseCase.Request
 
-    data class Response(val res: List<NewsArticle>) : UseCase.Response
+    data class Request(val page: Int) : UseCase.Request
+
+    data class Response(val news: List<NewsArticle>) : UseCase.Response
 
     override fun process(request: Request): Flow<Response> =
-        newsRepository.fetchNews(page = request.page).map {
-            Response(it)
+        newsRepository.fetchNews(page = request.page).map { Response(it)
         }
 }

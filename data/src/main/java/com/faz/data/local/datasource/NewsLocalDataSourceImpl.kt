@@ -12,6 +12,6 @@ class NewsLocalDataSourceImpl(private val newsDao: NewsDao) : NewsLocalDataSourc
         it.mapFromEntityToPure()
     }
 
-    override suspend fun insertNews(news: List<NewsArticle>) =
+    override  fun insertNews(news: List<NewsArticle>) =
         newsDao.insertNews(news.mapFromPureToEntity())
 }

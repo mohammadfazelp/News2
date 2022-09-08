@@ -1,7 +1,7 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
-    id("kotlin-kapt")
+//    id("kotlin-kapt")
 }
 
 dependencies {
@@ -14,10 +14,10 @@ dependencies {
     /*------------------------Dagger Hilt----------------------------------*/
     val hiltVersion = "2.42"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+//    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

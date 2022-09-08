@@ -1,38 +1,35 @@
 package com.faz.news.ui.list
 
-import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
-import com.faz.domain.repository.NewsRepository
+import androidx.lifecycle.viewModelScope
+import com.faz.domain.model.NewsArticle
+import com.faz.domain.usecase.GetNewsUseCase
+import com.faz.news.ui.state.NewsConverter
+import com.faz.news.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val newsRepository: com.faz.domain.repository.NewsRepository
+    private val useCase: GetNewsUseCase,
+    private val converter: NewsConverter
 ) : ViewModel() {
 
-    var isLoading = true // todo
-    var toastMessage : String? = "Something!" // todo
+    private val _newsFlow = MutableStateFlow<UiState<List<NewsArticle>>>(UiState.Loading)
 
-    private val fetchingIndex: MutableStateFlow<Int> = MutableStateFlow(0)
+    val newsFlow: StateFlow<UiState<List<NewsArticle>>> = _newsFlow
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val newsListFlow = fetchingIndex.flatMapLatest { page ->
-        newsRepository.fetchNews(
-            page = page,
-            onStart = { isLoading = true },
-            onComplete = { isLoading = false },
-            onError = { toastMessage = it }
-        )
-    }
-
-    @MainThread
-    fun fetchNextNewsList() {
-        if (!isLoading) {
-            fetchingIndex.value++
+    fun loadNews(page: Int) {
+        viewModelScope.launch {
+            useCase.execute(GetNewsUseCase.Request(page)).map {
+                converter.convert(it)
+            }.collect {
+                _newsFlow.value = it
+            }
         }
     }
 }

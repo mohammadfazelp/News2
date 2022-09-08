@@ -17,22 +17,6 @@ class NewsRepositoryImpl @Inject constructor(
     @Dispatcher(NewsDispatchers.IO) private val ioDispatcher: Dispatcher
 ) : NewsRepository {
 
-//    @WorkerThread
-//    override fun fetchNews(
-//        page: Int,
-//        onStart: () -> Unit,
-//        onComplete: () -> Unit,
-//        onError: (String?) -> Unit
-//    ) = flow {
-//        var news = newsDao.getNews(page)
-//        if(news.isEmpty()){
-//            val response = newsClient.fetchNewsList(page)
-//            response.suspendOnSuccess {
-//
-//            }
-//        }
-//    }.onStart { onStart() }.onCompletion { onComplete }.flowOn(ioDispatcher)
-
     override fun fetchNews(page: Int): Flow<List<NewsArticle>> {
         val news = newsLocalDataSource.fetchNews(page)
         news.onEmpty {
@@ -43,11 +27,7 @@ class NewsRepositoryImpl @Inject constructor(
         return newsLocalDataSource.fetchNews(page)
     }
 
-    override fun fetchNewsItem(id: Long): Flow<NewsArticle> {
-        TODO("Not yet implemented")
-    }
-
     override fun saveNews(news: List<NewsArticle>) {
-        TODO("Not yet implemented")
+        newsLocalDataSource.insertNews(news)
     }
 }
