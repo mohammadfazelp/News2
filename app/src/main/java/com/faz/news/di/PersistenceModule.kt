@@ -1,6 +1,9 @@
 package com.faz.news.di
 
 import android.app.Application
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.faz.news.data.database.NewsDao
 import com.faz.news.data.database.NewsDatabase
@@ -10,12 +13,14 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.prefs.Preferences
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DbModule {
+object PersistenceModule {
 
     @Provides
     @Singleton
@@ -47,4 +52,8 @@ object DbModule {
     fun provideTypeResponseConverter(moshi: Moshi): TypeResponseConverter {
         return TypeResponseConverter(moshi)
     }
+
+//    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "my_preferences")
+//    @Provides
+//    fun provideAppDataStore(@ApplicationContext context:Context) = AppDataStore(context.dataStore)
 }

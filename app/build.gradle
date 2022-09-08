@@ -34,6 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -69,4 +73,13 @@ dependencies {
 
     /*-------------------------------Room----------------------------------*/
     implementation 'androidx.room:room-ktx:2.4.3'
+
+    /*----------------------------DataStore-------------------------------*/
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    /*----------------------------Glide-------------------------------*/
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    /*----------------------------Bindables-------------------------------*/
+    implementation "com.github.skydoves:bindables:1.1.0"
 }
