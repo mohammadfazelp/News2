@@ -1,13 +1,8 @@
 package com.faz.news.ui.list
 
 import androidx.annotation.MainThread
-import androidx.databinding.Bindable
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.faz.news.model.NewsArticle
-import com.faz.news.repo.NewsRepository
-import com.skydoves.bindables.asBindingProperty
-import com.skydoves.bindables.bindingProperty
+import com.faz.domain.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val newsRepository: NewsRepository
+    private val newsRepository: com.faz.domain.repository.NewsRepository
 ) : ViewModel() {
 
     var isLoading = true // todo
