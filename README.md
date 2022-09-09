@@ -3,4 +3,4 @@
 - Flow (Coroutines concept to retrieve data stream)
 - Dagger hilt for dependency injection
 - Retrofit for networking
-- Room database
+- Room database with flow
